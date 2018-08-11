@@ -14,7 +14,15 @@ function SensiboAccessory(log, config) {
   this.apiKey = config['apiKey'];
   this.device = config['device'];
 
-  let fanService = new Service.Fan(this.name);
+  var informationService = new Service.AccessoryInformation();
+  informationService
+    .setCharacteristic(Characteristic.Manufacturer, 'Sensibo Inc.')
+    .setCharacteristic(Characteristic.Model, 'Sensibo SKY')
+    .setCharacteristic(Characteristic.SerialNumber, 'SEN-SKY-01');
+
+  this.informationService = informationService;
+
+  var fanService = new Service.Fan(this.name);
   fanService.getCharacteristic(Characteristic.On)
     .on('get', this.getFanStatus.bind(this))
     .on('set', this.setFanStatus.bind(this));
@@ -23,7 +31,7 @@ function SensiboAccessory(log, config) {
 }
 
 SensiboAccessory.prototype.getServices = function() {
-  return [this.fanService];
+  return [this.informationService, this.fanService];
 }
 
 var API = 'https://home.sensibo.com/api/v2';
