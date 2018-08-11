@@ -1,6 +1,6 @@
 {
   "name": "homebridge-sensibo2",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sensibo Sky plugin for Homebridge",
   "main": "index.js",
   "scripts": {
