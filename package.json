@@ -1,0 +1,27 @@
+{
+  "name": "homebridge-sensibo2",
+  "version": "0.0.1",
+  "description": "Sensibo Sky plugin for Homebridge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ealden/homebridge-sensibo2.git"
+  },
+  "keywords": [
+    "homebridge-plugin",
+    "sensibo"
+  ],
+  "author": "Ealden Esto E. Escañan <ealden@escanan.com> (https://ealden.escanan.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ealden/homebridge-sensibo2/issues"
+  },
+  "homepage": "https://github.com/ealden/homebridge-sensibo2#readme",
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.0"
+  }
+}
