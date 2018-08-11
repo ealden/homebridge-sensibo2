@@ -14,8 +14,6 @@ function SensiboAccessory(log, config) {
   this.apiKey = config['apiKey'];
   this.device = config['device'];
 
-  this.on = false;
-
   let fanService = new Service.Fan(this.name);
   fanService.getCharacteristic(Characteristic.On)
     .on('get', this.getFanStatus.bind(this))
@@ -51,9 +49,18 @@ SensiboAccessory.prototype.getFanStatus = function(next) {
 }
 
 SensiboAccessory.prototype.setFanStatus = function(on, next) {
-  this.log('Set Fan Status: ' + on);
+  this.log('Set Fan Status to: ' + ((on) ? 'on' : 'off'));
 
-  this.on = on;
+  var options = {
+    url: API + '/pods/' + this.device + '/acStates',
+    qs: { 'apiKey': this.apiKey },
+    body: { 'acState': { 'on': !!on } },
+    json: true
+  }
 
-  return next();
+  request.post(options, function(error, response, body) {
+      request.post(options, function(error, response, body) {
+            return next();
+          })
+      });
 }
