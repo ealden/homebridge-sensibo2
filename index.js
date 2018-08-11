@@ -1,3 +1,4 @@
+var request = require('request');
 var Service, Characteristic;
 
 module.exports = function(homebridge) {
@@ -10,6 +11,8 @@ module.exports = function(homebridge) {
 function SensiboAccessory(log, config) {
   this.log = log;
   this.name = config['name'];
+  this.apiKey = config['apiKey'];
+  this.device = config['device'];
 
   this.on = false;
 
@@ -25,10 +28,26 @@ SensiboAccessory.prototype.getServices = function() {
   return [this.fanService];
 }
 
-SensiboAccessory.prototype.getFanStatus = function(next) {
-  this.log('Get Fan Status: ' + this.on);
+var API = 'https://home.sensibo.com/api/v2';
 
-  return next(null, this.on);
+SensiboAccessory.prototype.getFanStatus = function(next) {
+  this.log('Get Fan Status');
+
+  var options = {
+    url: API + '/pods/' + this.device + '/acStates',
+    qs: {
+      'apiKey': this.apiKey,
+      'fields': 'acState',
+      'limit': 1,
+    }
+  }
+
+  request.get(options, function(error, response, body) {
+        var data = JSON.parse(body);
+        var on = data.result[0].acState.on;
+
+        return next(null, on);
+      });
 }
 
 SensiboAccessory.prototype.setFanStatus = function(on, next) {
